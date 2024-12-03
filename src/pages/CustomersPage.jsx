@@ -11,7 +11,7 @@ const CustomersPage = () => {
     const fetchCustomers = async () => {
       try {
         const { data } = await axios.get(
-          "https://apinivabeats.netlify.app/api/admin/customers",
+          "https://api-nivabeats-com.onrender.com/api/admin/customers",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("authToken")}`,

@@ -20,7 +20,7 @@ const RegisterAdmin = () => {
 
     try {
       const response = await axios.post(
-        "https://apinivabeats.netlify.app/api/auth/register-admin",
+        "https://api-nivabeats-com.onrender.com/api/auth/register-admin",
         {
           email,
           password,
