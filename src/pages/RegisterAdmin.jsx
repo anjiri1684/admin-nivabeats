@@ -20,7 +20,7 @@ const RegisterAdmin = () => {
 
     try {
       const response = await axios.post(
-        "https://niva-beats-backend.onrender.com/api/auth/register-admin",
+        "https://niva-beats-backend.vercel.app/api/auth/register-admin",
         {
           email,
           password,

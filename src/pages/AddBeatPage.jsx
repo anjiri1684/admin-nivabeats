@@ -33,7 +33,7 @@ const AddBeatPage = () => {
       formData.append("image", imageFile);
 
       const { data } = await axios.post(
-        "https://niva-beats-backend.onrender.com/api/beats/upload",
+        "https://niva-beats-backend.vercel.app/api/beats/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
