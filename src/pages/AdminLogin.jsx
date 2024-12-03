@@ -21,12 +21,7 @@ const AdminLogin = () => {
     try {
       const { data } = await axios.post(
         "https://niva-beats-backend.vercel.app/api/auth/login-admin",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        formData
       );
 
       // Save JWT token
