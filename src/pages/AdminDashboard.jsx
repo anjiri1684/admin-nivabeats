@@ -5,7 +5,7 @@ import Spinner from "../components/Spinner";
 import axios from "axios";
 
 const AdminDashboard = () => {
-  const [revenue, setRevenue] = useState(null); // Default to null to show loading spinner
+  const [revenue, setRevenue] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -16,10 +16,10 @@ const AdminDashboard = () => {
           throw new Error("No token found in local storage");
         }
 
-        console.log("Sending token:", token); // Debugging log
+        console.log("Sending token:", token);
 
         const { data } = await axios.get(
-          "https://api-nivabeats-com.onrender.com/api/admin/revenue",
+          "https://apinivabeats.netlify.app/api/beats/admin/revenue",
           {
             headers: {
               Authorization: `Bearer ${token}`,
