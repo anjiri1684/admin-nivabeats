@@ -19,7 +19,7 @@ const AdminDashboard = () => {
         console.log("Sending token:", token); // Debugging log
 
         const { data } = await axios.get(
-          "https://www.api.nivabeats.com/api/admin/revenue",
+          "https://api-nivabeats-com.onrender.com/api/admin/revenue",
           {
             headers: {
               Authorization: `Bearer ${token}`,

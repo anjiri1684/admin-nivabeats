@@ -25,7 +25,7 @@ const ResetPassword = () => {
       console.log("Sending request with:", { email, password });
 
       const response = await axios.post(
-        "https://www.api.nivabeats.com/api/auth/admin-reset-password",
+        "https://api-nivabeats-com.onrender.com/api/auth/admin-reset-password",
         { email, password, confirmPassword } // Ensure both password and confirmPassword are sent
       );
 

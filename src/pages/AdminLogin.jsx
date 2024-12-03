@@ -20,7 +20,7 @@ const AdminLogin = () => {
 
     try {
       const { data } = await axios.post(
-        "https://www.api.nivabeats.com/api/auth/login-admin",
+        "https://api-nivabeats-com.onrender.com/api/auth/login-admin",
         formData
       );
 

@@ -20,7 +20,7 @@ const RegisterAdmin = () => {
 
     try {
       const response = await axios.post(
-        "https://www.api.nivabeats.com/api/auth/register-admin",
+        "https://api-nivabeats-com.onrender.com/api/auth/register-admin",
         {
           email,
           password,

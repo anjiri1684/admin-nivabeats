@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://www.api.nivabeats.com", // Hardcoded base URL for your backend
+  baseURL: "https://api-nivabeats-com.onrender.com", // Hardcoded base URL for your backend
 });
 
 // Request Interceptor: Attach token to Authorization header
