@@ -11,7 +11,7 @@ const AddBeatPage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // New state for loading
+  const [loading, setLoading] = useState(false);
 
   const handleAudioChange = (e) => setAudioFile(e.target.files[0]);
   const handleImageChange = (e) => setImageFile(e.target.files[0]);
@@ -24,11 +24,27 @@ const AddBeatPage = () => {
       return;
     }
 
-    // Log file sizes
-    console.log("Audio file size:", audioFile.size);
-    console.log("Image file size:", imageFile.size);
+    // Validate price
+    if (price <= 0) {
+      setError("Price must be a positive value.");
+      return;
+    }
 
-    setLoading(true); // Set loading state to true when starting the upload
+    // File size limits (e.g., 50MB for audio and 10MB for image)
+    const MAX_AUDIO_SIZE = 50 * 1024 * 1024; // 50MB
+    const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
+
+    if (audioFile.size > MAX_AUDIO_SIZE) {
+      setError("Audio file is too large. Maximum size is 50MB.");
+      return;
+    }
+
+    if (imageFile.size > MAX_IMAGE_SIZE) {
+      setError("Image file is too large. Maximum size is 10MB.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const formData = new FormData();
@@ -57,7 +73,7 @@ const AddBeatPage = () => {
         err.response?.data?.message || "Error adding beat. Please try again."
       );
     } finally {
-      setLoading(false); // Set loading state to false when upload is finished
+      setLoading(false);
     }
   };
 
@@ -70,17 +86,26 @@ const AddBeatPage = () => {
     setImageFile(null);
   };
 
+  const resetMessage = () => {
+    setMessage("");
+    setError("");
+  };
+
+  if (message || error) {
+    setTimeout(resetMessage, 5000);
+  }
+
   return (
     <div>
       <Navbar />
       <div className="container mx-auto p-6">
         <h2 className="text-3xl font-bold mb-4">Add Beat</h2>
 
-        {/* Show success or error message */}
+        {/* Success or error messages */}
         {message && <p className="text-green-500">{message}</p>}
         {error && <p className="text-red-500">{error}</p>}
 
-        {/* Show loading spinner or message */}
+        {/* Loading spinner or message */}
         {loading && <p className="text-blue-500">Uploading...</p>}
 
         <form className="bg-gray-800 p-6 rounded-lg" onSubmit={handleAddBeat}>
@@ -92,6 +117,7 @@ const AddBeatPage = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           <div className="mb-4">
@@ -102,6 +128,7 @@ const AddBeatPage = () => {
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           <div className="mb-4">
@@ -112,6 +139,7 @@ const AddBeatPage = () => {
               value={artist}
               onChange={(e) => setArtist(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           <div className="mb-4">
@@ -122,34 +150,35 @@ const AddBeatPage = () => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           <div className="mb-4">
             <label>Audio File</label>
             <input
               type="file"
-              id="audio-input"
               className="w-full p-2 bg-gray-700 rounded"
               onChange={handleAudioChange}
               accept="audio/*"
               required
+              disabled={loading}
             />
           </div>
           <div className="mb-4">
             <label>Image File</label>
             <input
               type="file"
-              id="image-input"
               className="w-full p-2 bg-gray-700 rounded"
               onChange={handleImageChange}
               accept="image/*"
               required
+              disabled={loading}
             />
           </div>
           <button
             type="submit"
             className="bg-green-600 w-full py-2 rounded"
-            disabled={loading} // Disable the button while uploading
+            disabled={loading}
           >
             {loading ? "Uploading..." : "Add Beat"}
           </button>
