@@ -31,7 +31,7 @@ const AddBeatPage = () => {
     }
 
     const MAX_AUDIO_SIZE = 200 * 1024 * 1024;
-    const MAX_IMAGE_SIZE = 200 * 1024 * 1024;
+    const MAX_IMAGE_SIZE = 20 * 1024 * 1024;
 
     if (audioFile.size > MAX_AUDIO_SIZE) {
       setError("Audio file is too large. Maximum size is 200MB.");
@@ -68,9 +68,13 @@ const AddBeatPage = () => {
       setError("");
     } catch (err) {
       console.error("Upload error:", err.message);
-      setError(
-        err.response?.data?.message || "Error adding beat. Please try again."
-      );
+      if (err.response?.status === 413) {
+        setError("File size exceeds the limit. Please upload smaller files.");
+      } else {
+        setError(
+          err.response?.data?.message || "Error adding beat. Please try again."
+        );
+      }
     } finally {
       setLoading(false);
     }
