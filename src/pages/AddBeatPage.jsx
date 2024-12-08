@@ -47,7 +47,7 @@ const AddBeatPage = () => {
       resetForm();
       setError("");
     } catch (err) {
-      console.error("Upload error:", err.message);
+      console.error("Upload error:", err);
       setError(
         err.response?.data?.message || "Error adding beat. Please try again."
       );
@@ -63,8 +63,6 @@ const AddBeatPage = () => {
     setPrice("");
     setAudioFile(null);
     setImageFile(null);
-    document.querySelector("#audio-input").value = "";
-    document.querySelector("#image-input").value = "";
   };
 
   return (
