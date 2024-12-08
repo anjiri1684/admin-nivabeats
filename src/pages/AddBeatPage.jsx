@@ -30,17 +30,16 @@ const AddBeatPage = () => {
       return;
     }
 
-    // File size limits (e.g., 50MB for audio and 10MB for image)
-    const MAX_AUDIO_SIZE = 50 * 1024 * 1024; // 50MB
-    const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
+    const MAX_AUDIO_SIZE = 200 * 1024 * 1024;
+    const MAX_IMAGE_SIZE = 200 * 1024 * 1024;
 
     if (audioFile.size > MAX_AUDIO_SIZE) {
-      setError("Audio file is too large. Maximum size is 50MB.");
+      setError("Audio file is too large. Maximum size is 200MB.");
       return;
     }
 
     if (imageFile.size > MAX_IMAGE_SIZE) {
-      setError("Image file is too large. Maximum size is 10MB.");
+      setError("Image file is too large. Maximum size is 200MB.");
       return;
     }
 
