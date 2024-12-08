@@ -11,6 +11,7 @@ const AddBeatPage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // New state for loading
 
   const handleAudioChange = (e) => setAudioFile(e.target.files[0]);
   const handleImageChange = (e) => setImageFile(e.target.files[0]);
@@ -22,6 +23,8 @@ const AddBeatPage = () => {
       setError("Both audio and image files are required.");
       return;
     }
+
+    setLoading(true); // Set loading state to true when starting the upload
 
     try {
       const formData = new FormData();
@@ -48,6 +51,8 @@ const AddBeatPage = () => {
       setError(
         err.response?.data?.message || "Error adding beat. Please try again."
       );
+    } finally {
+      setLoading(false); // Set loading state to false when upload is finished
     }
   };
 
@@ -67,8 +72,14 @@ const AddBeatPage = () => {
       <Navbar />
       <div className="container mx-auto p-6">
         <h2 className="text-3xl font-bold mb-4">Add Beat</h2>
+
+        {/* Show success or error message */}
         {message && <p className="text-green-500">{message}</p>}
         {error && <p className="text-red-500">{error}</p>}
+
+        {/* Show loading spinner or message */}
+        {loading && <p className="text-blue-500">Uploading...</p>}
+
         <form className="bg-gray-800 p-6 rounded-lg" onSubmit={handleAddBeat}>
           <div className="mb-4">
             <label>Title</label>
@@ -132,7 +143,13 @@ const AddBeatPage = () => {
               required
             />
           </div>
-          <button className="bg-green-600 w-full py-2 rounded">Add Beat</button>
+          <button
+            type="submit"
+            className="bg-green-600 w-full py-2 rounded"
+            disabled={loading} // Disable the button while uploading
+          >
+            {loading ? "Uploading..." : "Add Beat"}
+          </button>
         </form>
       </div>
     </div>
