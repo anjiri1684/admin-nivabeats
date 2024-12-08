@@ -25,7 +25,7 @@ const ResetPassword = () => {
       console.log("Sending request with:", { email, password });
 
       const response = await axios.post(
-        "https://niva-beats-backend.vercel.app//api/auth/admin-reset-password",
+        "https://niva-beats-backend.vercel.app/api/auth/admin-reset-password",
         { email, password, confirmPassword } // Ensure both password and confirmPassword are sent
       );
 
