@@ -30,8 +30,8 @@ const AddBeatPage = () => {
       return;
     }
 
-    const MAX_AUDIO_SIZE = 200 * 1024 * 1024;
-    const MAX_IMAGE_SIZE = 20 * 1024 * 1024;
+    const MAX_AUDIO_SIZE = 200 * 1024 * 1024; // 200MB
+    const MAX_IMAGE_SIZE = 200 * 1024 * 1024; // 200MB
 
     if (audioFile.size > MAX_AUDIO_SIZE) {
       setError("Audio file is too large. Maximum size is 200MB.");
@@ -46,20 +46,42 @@ const AddBeatPage = () => {
     setLoading(true);
 
     try {
+      // Upload the audio file to Cloudinary
+      const audioData = new FormData();
+      audioData.append("file", audioFile);
+      audioData.append("upload_preset", "anjiri1684"); // Cloudinary preset
+      audioData.append("resource_type", "auto");
+
+      const audioUploadResponse = await axios.post(
+        `https://api.cloudinary.com/v1_1/dv1qckg4l/upload`, // Replace 'your_cloud_name'
+        audioData
+      );
+
+      // Upload the image file to Cloudinary
+      const imageData = new FormData();
+      imageData.append("file", imageFile);
+      imageData.append("upload_preset", "anjiri1684"); // Cloudinary preset
+      imageData.append("resource_type", "auto");
+
+      const imageUploadResponse = await axios.post(
+        `https://api.cloudinary.com/v1_1/dv1qckg4l/upload`, // Replace 'your_cloud_name'
+        imageData
+      );
+
+      // Send URLs to your backend
       const formData = new FormData();
       formData.append("title", title);
       formData.append("genre", genre);
       formData.append("artist", artist);
       formData.append("price", price);
-      formData.append("audioFile", audioFile);
-      formData.append("image", imageFile);
+      formData.append("audioFile", audioUploadResponse.data.secure_url); // Audio URL from Cloudinary
+      formData.append("image", imageUploadResponse.data.secure_url); // Image URL from Cloudinary
 
       const { data } = await axios.post(
         "https://niva-beats-backend.vercel.app/api/beats/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
-          timeout: 60000,
         }
       );
 
