@@ -24,6 +24,10 @@ const AddBeatPage = () => {
       return;
     }
 
+    // Log file sizes
+    console.log("Audio file size:", audioFile.size);
+    console.log("Image file size:", imageFile.size);
+
     setLoading(true); // Set loading state to true when starting the upload
 
     try {
@@ -47,7 +51,7 @@ const AddBeatPage = () => {
       resetForm();
       setError("");
     } catch (err) {
-      console.error("Upload error:", err);
+      console.error("Upload error:", err.message);
       setError(
         err.response?.data?.message || "Error adding beat. Please try again."
       );
